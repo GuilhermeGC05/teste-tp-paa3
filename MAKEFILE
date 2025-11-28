@@ -1,0 +1,30 @@
+
+CC = gcc
+CFLAGS = -Wall -Wextra -std=c11 -O2
+TARGET = criptoanalise
+OBJS = main.o cifra.o frequencia.o casamento.o
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) -lm
+
+main.o: main.c cifra.h frequencia.h casamento.h
+	$(CC) $(CFLAGS) -c main.c
+
+cifra.o: cifra.c cifra.h
+	$(CC) $(CFLAGS) -c cifra.c
+
+frequencia.o: frequencia.c frequencia.h cifra.h
+	$(CC) $(CFLAGS) -c frequencia.c
+
+casamento.o: casamento.c casamento.h
+	$(CC) $(CFLAGS) -c casamento.c
+
+clean:
+	rm -f $(OBJS) $(TARGET)
+
+run: $(TARGET)
+	./$(TARGET)
+
+.PHONY: all clean run
